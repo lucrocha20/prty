@@ -24,7 +24,8 @@ public class EventoController implements ControllerInterface<Evento> {
 	@Autowired
 	private EventoService eventos;
 	
-	public EventoController() {
+	public EventoController(EventoService eventos) {
+		this.eventos = eventos;
 	}
 	
 	@Override

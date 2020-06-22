@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,6 +16,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class Evento extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
+	
+	@ManyToOne
+	private Usuario usuario;
 	
 	@Column(name="nm_nome", length=60)
 	private String nome;
@@ -33,7 +37,14 @@ public class Evento extends AbstractEntity {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date data;
 	
-	protected Evento() {
+	public Evento() {}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getNome() {

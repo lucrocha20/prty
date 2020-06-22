@@ -15,11 +15,10 @@ public class Usuario extends AbstractEntity {
 	@Column(name = "nm_email", length = 60)
 	private String email;
 	
-	@Column(name = "ds_senha")
+	@Column(name = "ds_password")
 	private String senha;
 	
-	protected Usuario() {
-	}
+	public Usuario() {}
 
 	public String getNome() {
 		return nome;

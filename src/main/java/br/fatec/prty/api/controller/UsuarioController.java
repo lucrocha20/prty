@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,8 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 	@Autowired
 	private UsuarioService usuarios;
 	
-	public UsuarioController() {
+	public UsuarioController(UsuarioService usuarios) {
+		this.usuarios = usuarios;
 	}
 	
 	@Override
@@ -44,14 +46,14 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Override
 	@PostMapping
-	public ResponseEntity<Usuario> post(Usuario obj) {
+	public ResponseEntity<Usuario> post(@RequestBody Usuario obj) {
 		usuarios.create(obj);
 		return ResponseEntity.ok(obj);
 	}
 
 	@Override
 	@PutMapping
-	public ResponseEntity<?> put(Usuario obj) {
+	public ResponseEntity<?> put(@RequestBody Usuario obj) {
 		if (usuarios.update(obj)) {
 			return ResponseEntity.ok(obj);
 		}
@@ -60,7 +62,7 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Override
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> delete(Long id) {
+	public ResponseEntity<?> delete(@PathVariable Long id) {
 		if (usuarios.delete(id)) {
 			return ResponseEntity.ok().build();
 		}
