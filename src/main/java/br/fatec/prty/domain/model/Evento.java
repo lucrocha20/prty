@@ -32,6 +32,9 @@ public class Evento extends AbstractEntity {
 	@Column(name="dt_data")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date data;
+	
+	protected Evento() {
+	}
 
 	public String getNome() {
 		return nome;
