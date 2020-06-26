@@ -37,7 +37,7 @@ public class Evento extends AbstractEntity {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date data;
 	
-	public Evento() {}
+	protected Evento() {}
 
 	public Usuario getUsuario() {
 		return usuario;
