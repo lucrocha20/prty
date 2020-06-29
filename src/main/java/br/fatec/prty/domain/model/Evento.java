@@ -12,8 +12,8 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Table(name = "tb_evento")
 @Entity
+@Table(name = "tb_evento")
 public class Evento extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 	

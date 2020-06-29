@@ -18,7 +18,7 @@ public class Usuario extends AbstractEntity {
 	@Column(name = "ds_password")
 	private String senha;
 	
-	public Usuario() {}
+	protected Usuario() {}
 
 	public String getNome() {
 		return nome;
