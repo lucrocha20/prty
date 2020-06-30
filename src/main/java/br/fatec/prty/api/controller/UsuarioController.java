@@ -2,6 +2,8 @@ package br.fatec.prty.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +40,7 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Override
 	@GetMapping(value = "/{id}")
+	@CrossOrigin(origins = "*")
 	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
 		Usuario _usuario = usuarios.findById(id);
 		if (_usuario != null) {
@@ -48,14 +51,16 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Override
 	@PostMapping
-	public ResponseEntity<Usuario> post(@RequestBody Usuario obj) {
+	@CrossOrigin(origins = "*")
+	public ResponseEntity<Usuario> post(@Valid @RequestBody Usuario obj) {
 		usuarios.create(obj);
 		return ResponseEntity.ok(obj);
 	}
 
 	@Override
 	@PutMapping
-	public ResponseEntity<?> put(@RequestBody Usuario obj) {
+	@CrossOrigin(origins = "*")
+	public ResponseEntity<?> put(@Valid @RequestBody Usuario obj) {
 		if (usuarios.update(obj)) {
 			return ResponseEntity.ok(obj);
 		}
@@ -64,6 +69,7 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Override
 	@DeleteMapping(value = "/{id}")
+	@CrossOrigin(origins = "*")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		if (usuarios.delete(id)) {
 			return ResponseEntity.ok().build();

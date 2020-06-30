@@ -6,14 +6,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.GenericGenerator;
+import br.fatec.prty.domain.ValidationGroups;
 
 @MappedSuperclass
 public class AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@NotNull(groups = ValidationGroups.Id.class)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 

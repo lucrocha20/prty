@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.fatec.prty.domain.exception.NegocioException;
 import br.fatec.prty.domain.model.Usuario;
 import br.fatec.prty.domain.repository.UsuarioRepository;
 
@@ -17,8 +18,12 @@ public class UsuarioService implements ServiceInterface<Usuario> {
 	
 	@Override
 	public Usuario create(Usuario obj) {
-		usuarioRepo.save(obj);
-		return obj;
+		Usuario _usuario = usuarioRepo.findByEmail(obj.getEmail());
+		
+		if (_usuario != null) {
+			throw new NegocioException("Já existe um cliente cadastrado com esse e-mail!");
+		}
+		return usuarioRepo.save(obj);
 	}
 
 	@Override
