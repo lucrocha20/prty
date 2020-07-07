@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/eventos/**"
 	};
 	private static final String[] PUBLIC_MATCHERS_POST = {
-			"/usuario/**"
+			"/usuarios/**"
 	};
 	
 	@Override

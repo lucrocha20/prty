@@ -34,7 +34,7 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 	
 	@Override
 	@GetMapping
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	//@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<List<Usuario>> get() {
 		return ResponseEntity.ok(usuarios.findAll());
 	}

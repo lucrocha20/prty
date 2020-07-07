@@ -39,7 +39,7 @@ public class UsuarioService implements ServiceInterface<Usuario> {
 	@Override
 	public Usuario findById(Long id) {
 		UserDetailsImpl usuario = UsuarioService.authenticated();
-		if (usuario == null || (!usuario.hasRole(TipoPerfil.ADMIN)) && id.equals(usuario.getId())) {
+		if (usuario == null || (!usuario.hasRole(TipoPerfil.ADMIN)) && !id.equals(usuario.getId())) {
 			throw new AuthorizationException("Acesso negado!");
 		}
 		Optional<Usuario> _usuario = usuarioRepo.findById(id);
