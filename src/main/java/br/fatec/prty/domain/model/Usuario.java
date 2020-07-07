@@ -1,9 +1,14 @@
 package br.fatec.prty.domain.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -12,6 +17,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -20,7 +27,7 @@ public class Usuario extends AbstractEntity {
 	
 	@NotBlank
 	@Size(max = 60)
-	@Column(name = "nm_nome", length = 60)
+	@Column(name = "nm_nome", length = 60, nullable = false)
 	private String nome;
 	
 	@Size(max = 15)
@@ -43,14 +50,20 @@ public class Usuario extends AbstractEntity {
 	@NotBlank
 	@Size(max = 60)
 	@Email
-	@Column(name = "nm_email", length = 60)
+	@Column(name = "nm_email", length = 60, nullable = false)
 	private String email;
 	
 	@NotBlank
-	@Column(name = "ds_password")
+	@Column(name = "ds_password", nullable = false)
 	private String senha;
 	
-	protected Usuario() {}
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "tb_perfil")
+	private Set<Integer> perfis = new HashSet<>();
+	
+	protected Usuario() {
+		addPerfil(TipoPerfil.USUARIO);
+	}
 
 	public String getNome() {
 		return nome;
@@ -100,12 +113,26 @@ public class Usuario extends AbstractEntity {
 		this.email = email;
 	}
 
+	@JsonIgnore
 	public String getSenha() {
 		return senha;
 	}
 
+	@JsonProperty
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public Set<TipoPerfil> getPerfis() {
+		Set<TipoPerfil> p = new HashSet<>();
+		for (Integer tp : perfis) {
+			p.add(TipoPerfil.toEnum(tp));
+		}
+		return p;
+	}
+	
+	public void addPerfil(TipoPerfil perfil) {
+		this.perfis.add(perfil.getCodigo());
 	}
 
 }

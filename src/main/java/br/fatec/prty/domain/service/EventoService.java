@@ -25,7 +25,7 @@ public class EventoService implements ServiceInterface<Evento> {
 	}
 
 	@Override
-	public Evento findById(long id) {
+	public Evento findById(Long id) {
 		Optional<Evento> _evento = eventoRepo.findById(id);
 		return _evento.orElse(null);
 	}
