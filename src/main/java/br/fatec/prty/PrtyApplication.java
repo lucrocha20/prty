@@ -18,8 +18,10 @@ public class PrtyApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/usuarios").allowedOrigins("*");
-				registry.addMapping("/eventos").allowedOrigins("*");
+				registry.addMapping("/login/**")
+					.allowedOrigins("*")
+					.allowedMethods("POST")
+					.exposedHeaders("Authentication");
 			}
 		};
 	}
