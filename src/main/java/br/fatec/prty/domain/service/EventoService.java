@@ -33,6 +33,10 @@ public class EventoService implements ServiceInterface<Evento> {
 	public List<Evento> findAll() {
 		return eventoRepo.findAll();
 	}
+	
+	public List<Evento> findByUsuarioId(Long id) {
+		return eventoRepo.findByUsuarioId(id);
+	}
 
 	@Override
 	public boolean update(Evento obj) {
