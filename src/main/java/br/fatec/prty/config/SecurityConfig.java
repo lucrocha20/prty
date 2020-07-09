@@ -78,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
-			.allowedMethods("*")
+			.allowedMethods("GET", "POST", "HEAD", "PUT", "OPTIONS", "DELETE", "PATCH")
 			.allowedHeaders("*")
 			.allowedOrigins("https//prty.netlify.app/**")
 			.exposedHeaders("Authentication", "Access-Control-Expose-Header");
