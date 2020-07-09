@@ -38,7 +38,6 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@NotBlank
 	@Size(max = 60)
 	@Column(name = "nm_nome", length = 60, nullable = false)
 	private String nome;
@@ -60,13 +59,11 @@ public class Usuario implements Serializable {
 	@Column(name = "ds_celular", length = 20)
 	private String celular;
 
-	@NotBlank
 	@Size(max = 60)
 	@Email
 	@Column(name = "nm_email", length = 60, nullable = false)
 	private String email;
 	
-	@NotBlank
 	@Column(name = "ds_password", nullable = false)
 	private String senha;
 	
