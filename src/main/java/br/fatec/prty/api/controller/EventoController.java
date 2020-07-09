@@ -27,14 +27,12 @@ public class EventoController implements ControllerInterface<Evento> {
 	
 	@Override
 	@GetMapping
-	@CrossOrigin(value = "*")
 	public ResponseEntity<List<Evento>> get() {
 		return ResponseEntity.ok(eventos.findAll());
 	}
 
 	@Override
 	@GetMapping(value = "/{id}")
-	@CrossOrigin(value = "*")
 	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
 		Evento evento = eventos.findById(id);
 		if (evento != null) {
@@ -44,14 +42,12 @@ public class EventoController implements ControllerInterface<Evento> {
 	}
 	
 	@GetMapping(value = "/usuario/{id}")
-	@CrossOrigin(value = "*")
 	public ResponseEntity<List<Evento>> getByUsuarioId(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(eventos.findByUsuarioId(id));
 	}
 	
 	@Override
 	@PostMapping
-	@CrossOrigin(value = "*")
 	public ResponseEntity<Evento> post(@RequestBody Evento obj) {
 		eventos.create(obj);
 		return ResponseEntity.ok(obj);
@@ -59,7 +55,6 @@ public class EventoController implements ControllerInterface<Evento> {
 
 	@Override
 	@PutMapping
-	@CrossOrigin(value = "*")
 	public ResponseEntity<?> put(@RequestBody Evento obj) {
 		if (eventos.update(obj)) {
 			return ResponseEntity.ok(obj);
@@ -69,7 +64,6 @@ public class EventoController implements ControllerInterface<Evento> {
 
 	@Override
 	@DeleteMapping(value = "/{id}")
-	@CrossOrigin(value = "*")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		if (eventos.delete(id)) {
 			return ResponseEntity.ok().build();

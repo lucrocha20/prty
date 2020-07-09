@@ -33,14 +33,12 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 	
 	@Override
 	@GetMapping
-	@CrossOrigin(value = "*")
 	public ResponseEntity<List<Usuario>> get() {
 		return ResponseEntity.ok(usuarios.findAll());
 	}
 
 	@Override
 	@GetMapping(value = "/{id}")
-	@CrossOrigin(value = "*")
 	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
 		Usuario _usuario = usuarios.findById(id);
 		if (_usuario != null) {
@@ -51,7 +49,6 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Override
 	@PostMapping
-	@CrossOrigin(value = "*")
 	public ResponseEntity<Usuario> post(@Valid @RequestBody Usuario obj) {
 		usuarios.create(obj);
 		return ResponseEntity.ok(obj);
@@ -59,7 +56,6 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Override
 	@PutMapping
-	@CrossOrigin(value = "*")
 	public ResponseEntity<?> put(@Valid @RequestBody Usuario obj) {
 		if (usuarios.update(obj)) {
 			return ResponseEntity.ok(obj);
@@ -69,7 +65,6 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Override
 	@DeleteMapping(value = "/{id}")
-	@CrossOrigin(value = "*")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		if (usuarios.delete(id)) {
 			return ResponseEntity.ok().build();
