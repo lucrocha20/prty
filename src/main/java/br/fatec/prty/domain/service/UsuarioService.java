@@ -57,7 +57,14 @@ public class UsuarioService implements ServiceInterface<Usuario> {
 	@Override
 	public boolean update(Usuario obj) {
 		if (usuarioRepo.existsById(obj.getId())) {
-			usuarioRepo.save(obj);
+			Usuario usuario = usuarioRepo.findByEmail(obj.getEmail());
+			if (obj.getNome() != null) usuario.setNome(obj.getNome());
+			if (obj.getCpf() != null) usuario.setCpf(obj.getCpf());
+			if (obj.getNascimento() != null) usuario.setNascimento(obj.getNascimento());
+			if (obj.getCidade() != null) usuario.setCidade(obj.getCidade());
+			if (obj.getCelular() != null) usuario.setCelular(obj.getCelular());
+			if (obj.getSenha() != null) usuario.setSenha(passwordEncoder.encode(obj.getSenha()));
+			usuarioRepo.save(usuario);
 			return true;
 		}
 		return false;
