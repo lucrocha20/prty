@@ -56,7 +56,6 @@ public class EventoController implements ControllerInterface<Evento> {
 
 	@Override
 	@PutMapping
-	@CrossOrigin(origins = "*", methods = RequestMethod.PUT)
 	public ResponseEntity<?> put(@RequestBody Evento obj) {
 		if (eventos.update(obj)) {
 			return ResponseEntity.ok(obj);
@@ -66,7 +65,6 @@ public class EventoController implements ControllerInterface<Evento> {
 
 	@Override
 	@DeleteMapping(value = "/{id}")
-	@CrossOrigin(origins = "*", methods = RequestMethod.DELETE)
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		if (eventos.delete(id)) {
 			return ResponseEntity.ok().build();

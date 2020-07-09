@@ -58,7 +58,6 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Override
 	@PutMapping
-	@CrossOrigin(origins = "*", methods = RequestMethod.PUT)
 	public ResponseEntity<?> put(@Valid @RequestBody Usuario obj) {
 		if (usuarios.update(obj)) {
 			return ResponseEntity.ok(obj);
@@ -68,7 +67,6 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Override
 	@DeleteMapping(value = "/{id}")
-	@CrossOrigin(origins = "*", methods = RequestMethod.DELETE)
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		if (usuarios.delete(id)) {
 			return ResponseEntity.ok().build();
