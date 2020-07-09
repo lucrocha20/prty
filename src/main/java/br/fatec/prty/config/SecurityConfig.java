@@ -39,6 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 	private static final String[] PUBLIC_MATCHERS_POST = {
 			"/usuarios/**"
 	};
+	private static final String[] PUBLIC_MATCHERS_PUT = {};
+	private static final String[] PUBLIC_MATCHERS_DELETE = {};
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -52,6 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 			.antMatchers("/login").permitAll()
 			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS).permitAll()
 			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+			.antMatchers(HttpMethod.PUT, PUBLIC_MATCHERS_PUT).permitAll()
+			.antMatchers(HttpMethod.DELETE, PUBLIC_MATCHERS_DELETE).permitAll()
 			.anyRequest().authenticated().and()
 			.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil))
 			.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService))
@@ -73,10 +77,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD")
+		registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE")
 			.allowedHeaders("*")
 			.allowedOrigins("*")
-			.exposedHeaders("Authentication");
+			.exposedHeaders("Authentication", "Access-Control-Expose-Header");
 		WebMvcConfigurer.super.addCorsMappings(registry);
 	}
 }
