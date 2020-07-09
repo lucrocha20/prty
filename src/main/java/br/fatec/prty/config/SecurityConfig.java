@@ -48,18 +48,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.authorizeRequests()
 			.antMatchers("/login").permitAll()
 			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS).permitAll()
 			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
-			.anyRequest().authenticated();
-		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
-		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
+			.anyRequest().authenticated().and()
+			.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil))
+			.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService))
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+		;
 	}
 	
 	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
+	public CorsConfigurationSource corsConfigurationSource() {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
 		return source;
@@ -75,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 		registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD")
 			.allowedHeaders("*")
 			.allowedOrigins("*")
-			.exposedHeaders("Authorization");
+			.exposedHeaders("Authentication");
 		WebMvcConfigurer.super.addCorsMappings(registry);
 	}
 }
