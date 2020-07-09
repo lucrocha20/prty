@@ -1,20 +1,17 @@
 package br.fatec.prty.domain.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -22,14 +19,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "tb_evento")
-public class Evento extends AbstractEntity {
+public class Evento implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	@NotBlank
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="usuario_id", nullable = false)
-	private Usuario usuario;
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
 	@NotBlank
 	@Size(max = 60)
 	@Column(name="nm_nome", length=60, nullable = false)
@@ -49,29 +45,19 @@ public class Evento extends AbstractEntity {
 	@Column(name="ds_descricao", length=200)
 	private String descricao;
 	
-	@NotBlank
 	@Temporal(TemporalType.DATE)
-	@Column(name="dt_data", nullable = false)
+	@Column(name="dt_data")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date data;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_participantes",
-			joinColumns = @JoinColumn(name = "fk_evento_id"),
-			inverseJoinColumns = @JoinColumn(name = "fk_usuario_id"))
-	private Set<Usuario> participantes;
-	
-	@ManyToMany(mappedBy = "favoritos")
-	private Set<Usuario> favoritados;
-	
-	protected Evento() {}
+	public Evento() {}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Long getId() {
+		return id;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -122,20 +108,29 @@ public class Evento extends AbstractEntity {
 		this.data = data;
 	}
 
-	public Set<Usuario> getParticipantes() {
-		return participantes;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
-	public void setParticipantes(Set<Usuario> participantes) {
-		this.participantes = participantes;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Evento other = (Evento) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
-	public Set<Usuario> getFavoritados() {
-		return favoritados;
-	}
-
-	public void setFavoritados(Set<Usuario> favoritados) {
-		this.favoritados = favoritados;
-	}
-	
 }

@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import br.fatec.prty.domain.exception.AuthorizationException;
 import br.fatec.prty.domain.exception.NegocioException;
+import br.fatec.prty.domain.model.Evento;
 import br.fatec.prty.domain.model.TipoPerfil;
 import br.fatec.prty.domain.model.Usuario;
+import br.fatec.prty.domain.repository.EventoRepository;
 import br.fatec.prty.domain.repository.UsuarioRepository;
 import br.fatec.prty.security.UserDetailsImpl;
 
@@ -25,10 +27,11 @@ public class UsuarioService implements ServiceInterface<Usuario> {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	public UsuarioService() {}
+	
 	@Override
 	public Usuario create(Usuario obj) {
 		Usuario usuario = usuarioRepo.findByEmail(obj.getEmail());
-		
 		if (usuario != null) {
 			throw new NegocioException("Já existe um cliente cadastrado com esse e-mail!");
 		}

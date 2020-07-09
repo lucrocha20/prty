@@ -15,8 +15,7 @@ public class EventoService implements ServiceInterface<Evento> {
 	@Autowired
 	private EventoRepository eventoRepo;
 	
-	public EventoService() {
-	}
+	public EventoService() {}
 	
 	@Override
 	public Evento create(Evento obj) {
@@ -30,10 +29,6 @@ public class EventoService implements ServiceInterface<Evento> {
 		return _evento.orElse(null);
 	}
 
-	public List<Evento> findByUsuario(Long id) {
-		return eventoRepo.findByUsuario(id);
-	}
-	
 	@Override
 	public List<Evento> findAll() {
 		return eventoRepo.findAll();

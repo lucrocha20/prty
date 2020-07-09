@@ -1,5 +1,6 @@
 package br.fatec.prty.domain.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,6 +10,9 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -26,8 +30,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "tb_usuario")
-public class Usuario extends AbstractEntity {
+public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	
 	@NotBlank
 	@Size(max = 60)
@@ -61,23 +69,19 @@ public class Usuario extends AbstractEntity {
 	@Column(name = "ds_password", nullable = false)
 	private String senha;
 	
-	@OneToMany(mappedBy = "usuario")
-	private Set<Evento> eventos;
-	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "tb_perfil")
 	private Set<Integer> perfis = new HashSet<>();
 	
-	@ManyToMany(mappedBy = "participantes")
-	private Set<Evento> participacoes;
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "tb_favoritos",
-			joinColumns = @JoinColumn(name = "fk_usuario_id"),
-			inverseJoinColumns = @JoinColumn(name = "fk_evento_id"))
-	private Set<Evento> favoritos;
-	
-	protected Usuario() {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Usuario() {
 		addPerfil(TipoPerfil.USUARIO);
 	}
 
@@ -139,15 +143,6 @@ public class Usuario extends AbstractEntity {
 		this.senha = senha;
 	}
 	
-	@JsonIgnore
-	public Set<Evento> getEventos() {
-		return eventos;
-	}
-
-	public void setEventos(Set<Evento> eventos) {
-		this.eventos = eventos;
-	}
-
 	public Set<TipoPerfil> getPerfis() {
 		Set<TipoPerfil> p = new HashSet<>();
 		for (Integer tp : perfis) {
@@ -160,20 +155,29 @@ public class Usuario extends AbstractEntity {
 		this.perfis.add(perfil.getCodigo());
 	}
 
-	public Set<Evento> getParticipacoes() {
-		return participacoes;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
-	public void setParticipacoes(Set<Evento> participacoes) {
-		this.participacoes = participacoes;
-	}
-
-	public Set<Evento> getFavoritos() {
-		return favoritos;
-	}
-
-	public void setFavoritos(Set<Evento> favoritos) {
-		this.favoritos = favoritos;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

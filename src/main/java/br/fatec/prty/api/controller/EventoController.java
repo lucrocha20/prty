@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.fatec.prty.domain.model.Evento;
+import br.fatec.prty.domain.model.Usuario;
 import br.fatec.prty.domain.service.EventoService;
+import br.fatec.prty.domain.service.UsuarioService;
 
 @RestController
 @RequestMapping("/eventos")
@@ -25,10 +27,6 @@ public class EventoController implements ControllerInterface<Evento> {
 
 	@Autowired
 	private EventoService eventos;
-	
-	public EventoController(EventoService eventos) {
-		this.eventos = eventos;
-	}
 	
 	@Override
 	@GetMapping
@@ -39,18 +37,13 @@ public class EventoController implements ControllerInterface<Evento> {
 	@Override
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-		Evento _evento = eventos.findById(id);
-		if (_evento != null) {
-			return ResponseEntity.ok(_evento);
+		Evento evento = eventos.findById(id);
+		if (evento != null) {
+			return ResponseEntity.ok(evento);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
-	@GetMapping(value = "/usuario/{id}")
-	public ResponseEntity<?> getByUsuario(@PathVariable("id") Long id) {
-		return null;
-	}
-
 	@Override
 	@PostMapping
 	public ResponseEntity<Evento> post(@RequestBody Evento obj) {
