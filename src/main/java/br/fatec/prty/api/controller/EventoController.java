@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.fatec.prty.domain.model.Evento;
@@ -55,6 +56,7 @@ public class EventoController implements ControllerInterface<Evento> {
 
 	@Override
 	@PutMapping
+	@CrossOrigin(origins = "*", methods = RequestMethod.PUT)
 	public ResponseEntity<?> put(@RequestBody Evento obj) {
 		if (eventos.update(obj)) {
 			return ResponseEntity.ok(obj);
@@ -64,6 +66,7 @@ public class EventoController implements ControllerInterface<Evento> {
 
 	@Override
 	@DeleteMapping(value = "/{id}")
+	@CrossOrigin(origins = "*", methods = RequestMethod.DELETE)
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		if (eventos.delete(id)) {
 			return ResponseEntity.ok().build();

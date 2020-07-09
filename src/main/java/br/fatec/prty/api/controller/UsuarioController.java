@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.fatec.prty.domain.model.Usuario;
@@ -56,6 +58,7 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Override
 	@PutMapping
+	@CrossOrigin(origins = "*", methods = RequestMethod.PUT)
 	public ResponseEntity<?> put(@Valid @RequestBody Usuario obj) {
 		if (usuarios.update(obj)) {
 			return ResponseEntity.ok(obj);
@@ -65,6 +68,7 @@ public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Override
 	@DeleteMapping(value = "/{id}")
+	@CrossOrigin(origins = "*", methods = RequestMethod.DELETE)
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		if (usuarios.delete(id)) {
 			return ResponseEntity.ok().build();
