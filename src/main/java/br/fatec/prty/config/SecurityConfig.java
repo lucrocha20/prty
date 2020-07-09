@@ -15,9 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import br.fatec.prty.security.JWTAuthenticationFilter;
 import br.fatec.prty.security.JWTAuthorizationFilter;
 import br.fatec.prty.security.JWTUtil;
@@ -25,7 +22,7 @@ import br.fatec.prty.security.JWTUtil;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private JWTUtil jwtUtil;
@@ -73,15 +70,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
-
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**")
-			.allowedMethods("GET", "POST", "HEAD", "PUT", "OPTIONS", "DELETE", "PATCH")
-			.allowedHeaders("*")
-			.allowedOrigins("https//prty.netlify.app/**")
-			.exposedHeaders("Authentication", "Access-Control-Expose-Header");
-		WebMvcConfigurer.super.addCorsMappings(registry);
 	}
 }
