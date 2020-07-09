@@ -134,10 +134,12 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
 
+	@JsonIgnore
 	public String getSenha() {
 		return senha;
 	}
 
+	@JsonProperty
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
