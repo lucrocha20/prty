@@ -80,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 		registry.addMapping("/**")
 			.allowedMethods("*")
 			.allowedHeaders("*")
-			.allowedOrigins("https://prty.netlify.app")
+			.allowedOrigins("https//prty.netlify.app/**")
 			.exposedHeaders("Authentication", "Access-Control-Expose-Header");
 		WebMvcConfigurer.super.addCorsMappings(registry);
 	}
