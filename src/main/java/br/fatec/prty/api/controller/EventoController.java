@@ -20,6 +20,7 @@ import br.fatec.prty.domain.service.EventoService;
 
 @RestController
 @RequestMapping("/eventos")
+@CrossOrigin(value = "*")
 public class EventoController implements ControllerInterface<Evento> {
 
 	@Autowired
@@ -43,6 +44,11 @@ public class EventoController implements ControllerInterface<Evento> {
 			return ResponseEntity.ok(_evento);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+	
+	@GetMapping(value = "/usuario/{id}")
+	public ResponseEntity<?> getByUsuario(@PathVariable("id") Long id) {
+		return null;
 	}
 
 	@Override

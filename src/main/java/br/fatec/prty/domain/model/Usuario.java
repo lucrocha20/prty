@@ -9,6 +9,10 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -57,9 +61,21 @@ public class Usuario extends AbstractEntity {
 	@Column(name = "ds_password", nullable = false)
 	private String senha;
 	
+	@OneToMany(mappedBy = "usuario")
+	private Set<Evento> eventos;
+	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "tb_perfil")
 	private Set<Integer> perfis = new HashSet<>();
+	
+	@ManyToMany(mappedBy = "participantes")
+	private Set<Evento> participacoes;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "tb_favoritos",
+			joinColumns = @JoinColumn(name = "fk_usuario_id"),
+			inverseJoinColumns = @JoinColumn(name = "fk_evento_id"))
+	private Set<Evento> favoritos;
 	
 	protected Usuario() {
 		addPerfil(TipoPerfil.USUARIO);
@@ -123,6 +139,15 @@ public class Usuario extends AbstractEntity {
 		this.senha = senha;
 	}
 	
+	@JsonIgnore
+	public Set<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(Set<Evento> eventos) {
+		this.eventos = eventos;
+	}
+
 	public Set<TipoPerfil> getPerfis() {
 		Set<TipoPerfil> p = new HashSet<>();
 		for (Integer tp : perfis) {
@@ -133,6 +158,22 @@ public class Usuario extends AbstractEntity {
 	
 	public void addPerfil(TipoPerfil perfil) {
 		this.perfis.add(perfil.getCodigo());
+	}
+
+	public Set<Evento> getParticipacoes() {
+		return participacoes;
+	}
+
+	public void setParticipacoes(Set<Evento> participacoes) {
+		this.participacoes = participacoes;
+	}
+
+	public Set<Evento> getFavoritos() {
+		return favoritos;
+	}
+
+	public void setFavoritos(Set<Evento> favoritos) {
+		this.favoritos = favoritos;
 	}
 
 }

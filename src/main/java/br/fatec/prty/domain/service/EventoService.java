@@ -30,6 +30,10 @@ public class EventoService implements ServiceInterface<Evento> {
 		return _evento.orElse(null);
 	}
 
+	public List<Evento> findByUsuario(Long id) {
+		return eventoRepo.findByUsuario(id);
+	}
+	
 	@Override
 	public List<Evento> findAll() {
 		return eventoRepo.findAll();

@@ -23,6 +23,7 @@ import br.fatec.prty.domain.service.UsuarioService;
 
 @RestController
 @RequestMapping("/usuarios")
+@CrossOrigin(value = "*")
 public class UsuarioController implements ControllerInterface<Usuario> {
 
 	@Autowired
