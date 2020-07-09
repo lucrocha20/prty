@@ -26,7 +26,6 @@ import br.fatec.prty.dto.CredenciaisDTO;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private AuthenticationManager authenticationManager;
 	private JWTUtil jwtUtil;
-	private UsuarioRepository usuarioRepo;
 	
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
 		this.authenticationManager = authenticationManager;
@@ -51,16 +50,14 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
-		Usuario user = usuarioRepo.findByEmail(username);
-		String id = user.getId().toString();
 		String token = jwtUtil.generateToken(username);
 		response.addHeader("Authentication", "Bearer " + token);
 		response.addHeader("Access-Control-Expose-Header", "*");
 		
 		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
+		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
-		out.print("{ \"id\": \""+id+"\", \"token\": \""+token+"\" }");
+		out.print(token);
 		out.flush();
 	}
 		
