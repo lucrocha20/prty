@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if (usuario == null) {
 			throw new NegocioException("Usuário não encontrado!");
 		}
-		return new UserDetailsImpl(usuario.getId(), usuario.getEmail(), usuario.getSenha(), usuario.getPerfis()) ;
+		return new UserDetailsImpl(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getPerfis()) ;
 	}
 
 }
