@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -72,6 +73,9 @@ public class Usuario implements Serializable {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "tb_perfil")
 	private Set<Integer> perfis = new HashSet<>();
+	
+	@OneToMany(mappedBy = "usuario")
+	private Set<Evento> eventos;
 	
 	public Long getId() {
 		return id;

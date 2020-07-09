@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +27,11 @@ public class Evento implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
+	
+	@ManyToOne
+	@JoinColumn(name = "usuario_id", nullable = false)
+	private Usuario usuario;
+	
 	@NotBlank
 	@Size(max = 60)
 	@Column(name="nm_nome", length=60, nullable = false)
@@ -58,6 +64,14 @@ public class Evento implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getNome() {
