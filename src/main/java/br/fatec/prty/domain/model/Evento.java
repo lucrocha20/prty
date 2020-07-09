@@ -29,12 +29,12 @@ public class Evento implements Serializable {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "usuario_id", nullable = false)
+	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 	
 	@NotBlank
 	@Size(max = 60)
-	@Column(name="nm_nome", length=60, nullable = false)
+	@Column(name="nm_nome", length=60)
 	private String nome;
 	
 	@Size(max = 60)

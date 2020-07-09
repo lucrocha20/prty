@@ -39,7 +39,7 @@ public class Usuario implements Serializable {
 	private Long id;
 	
 	@Size(max = 60)
-	@Column(name = "nm_nome", length = 60, nullable = false)
+	@Column(name = "nm_nome", length = 60)
 	private String nome;
 	
 	@Size(max = 15)
@@ -61,10 +61,10 @@ public class Usuario implements Serializable {
 
 	@Size(max = 60)
 	@Email
-	@Column(name = "nm_email", length = 60, nullable = false)
+	@Column(name = "nm_email", length = 60)
 	private String email;
 	
-	@Column(name = "ds_password", nullable = false)
+	@Column(name = "ds_password")
 	private String senha;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
